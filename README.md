@@ -1,5 +1,8 @@
 # https://github.com/bezkoder/react-firebase-database-crud/
 
+# kendo-theme-defalut 套件中 all.css
+# 35072行 calc需加括號
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

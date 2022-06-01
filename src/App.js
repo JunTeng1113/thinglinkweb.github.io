@@ -15,7 +15,8 @@ import { useMergeState } from 'react-hooks-lib'
 import Service from './component/service.js';
 import ApexChart from './component/ApexChart.js';
 import { flower as chartData } from './component/data-vizualization.js';
-
+import {ChartContainer} from './component/ChartCard.js';
+import '@progress/kendo-theme-default/dist/all.css';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -70,12 +71,15 @@ function App() {
           {controls && <ConsoleCard data={controls} updateData={updateData}/>}
         </Grid>
         <Grid item xs={4} sm={2} md={5}>
-          <ChartCard data={chartData} field={'temp'} fieldName={"溫度"} title={"溫度資訊圖表"} />
+          <ChartContainer data={chartData} title={"溫度資訊圖表"} field={'temp'} fieldName={"溫度"} style={'step'}/>
+          {/* <ChartCard data={chartData} field={'temp'} fieldName={"溫度"} title={"溫度資訊圖表"} /> */}
         </Grid>
         <Grid item xs={4} sm={2} md={5}>
-          <ChartCard data={chartData} field={'humidity'} fieldName={"濕度"} title={"濕度資訊圖表"} />
+          <ChartContainer data={chartData} title={"濕度資訊圖表"} field={'humidity'} fieldName={"濕度"} style={'step'}/>
         </Grid>
       </Grid>
+      <Box>
+      </Box>
     </>
   );
 }
