@@ -841,3 +841,32 @@ export const born = [
     ],
   };
   
+  export const flower = [
+    {
+      time: "06/01 12:00", temp: 26.1, humidity: 76, light: 10.12,
+    }, {
+      time: "06/01 13:00", temp: 26.2, humidity: 75, light: 10.12,
+    }, {
+      time: "06/01 14:00", temp: 26.9, humidity: 70, light: 10.12,
+    }, {
+      time: "06/01 15:00", temp: 26.3, humidity: 75, light: 10.12,
+    }, {
+      time: "06/01 16:00", temp: 27.1, humidity: 74, light: 10.12,
+    }, {
+      time: "06/01 17:00", temp: 27.9, humidity: 77, light: 10.12,
+    }, {
+      time: "06/01 18:00", temp: 28.3, humidity: 76, light: 10.12,
+    }, {
+      time: "06/01 19:00", temp: 27.1, humidity: 75, light: 10.12,
+    }, {
+      time: "06/01 20:00", temp: 26.8, humidity: 73, light: 10.12,
+    }, {
+      time: "06/01 21:00", temp: 26.3, humidity: 75, light: 10.12,
+    }, {
+      time: "06/01 22:00", temp: 25.8, humidity: 74, light: 10.12,
+    }, {
+      time: "06/01 23:00", temp: 26.1, humidity: 76, light: 10.12,
+    }, {
+      time: "06/02 00:00", temp: 26.7, humidity: 76, light: 10.12,
+    }
+  ];

@@ -15,7 +15,15 @@ import FormLabel from '@mui/material/FormLabel';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 export function InfoCard(props) {
   const { data } = props;
@@ -25,7 +33,7 @@ export function InfoCard(props) {
   const { tvalue: temp, hvalue: humidity } = sensorValue;
   const { value: lightUp } = lightValue;
   return (
-    <Card sx={{ minWidth: '400px' }} {...props}>
+    <Card sx={{height: '100%'}} {...props}>
       <CardContent>
         <Stack direction="row" spacing={2} sx={{ minHeight: '60px'}}>
           <Box>
@@ -65,8 +73,8 @@ export function ConsoleCard(props) {
       setIsAuto(e.target.checked);
     }
     return (
-      <Card sx={{ minWidth: '400px', ml: '16px', flexGrow: 1 }} {...props}>
-        <CardContent>
+      <Card sx={{height: '100%'}} {...props}>
+        <CardContent >
           <Stack direction="row" spacing={2} sx={{ minHeight: '60px'}}>
             <Box>
                 <Typography variant="h5" component="div">
@@ -91,71 +99,77 @@ export function ConsoleCard(props) {
             </Box>
           </Stack>
           <hr/>
-          <Box  sx={{display: 'flex', justifyContent: 'space-around'}}>
-            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
-              <FormControl>
-                  <FormLabel component="legend">亮度控制</FormLabel>
-                  <FormGroup aria-label="position" row sx={{mt: 2}}>
-                      <FormControlLabel
-                      value="LED1"
-                      control={<Switch color="primary" checked={control['LED1']} disabled={isAuto} />}
-                      label="LED1"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                      <FormControlLabel
-                      value="LED2"
-                      control={<Switch color="primary" checked={control['LED2']} disabled={isAuto} />}
-                      label="LED2"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                  </FormGroup>
-              </FormControl>
-            </Paper>
-            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
-              <FormControl>
-                  <FormLabel component="legend">風扇控制</FormLabel>
-                  <FormGroup aria-label="position" row sx={{mt: 2}}>
-                      <FormControlLabel
-                      value="fan1"
-                      control={<Switch color="primary" checked={control['fan1']} disabled={isAuto} />}
-                      label="FAN1"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                      <FormControlLabel
-                      value="fan2"
-                      control={<Switch color="primary" checked={control['fan2']} disabled={isAuto}/>}
-                      label="FAN2"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                      <FormControlLabel
-                      value="fan3"
-                      control={<Switch color="primary" checked={control['fan3']} disabled={isAuto} />}
-                      label="FAN3"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                  </FormGroup>
-              </FormControl>
-            </Paper>
-            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
-              <FormControl>
-                  <FormLabel component="legend">窗簾</FormLabel>
-                  <FormGroup aria-label="position" row sx={{mt: 2}}>
-                      <FormControlLabel
-                      value="window"
-                      control={<Switch color="primary" checked={control['window']} disabled={isAuto} />}
-                      label="WINDOW"
-                      labelPlacement="top"
-                      onChange={(e) => updateData(e, index)}
-                      />
-                  </FormGroup>
-              </FormControl>
-            </Paper>
-          </Box>
+          <Grid container columns={{ xs: 1, sm: 5}}>
+            <Grid item xs={1} sm={3} md="auto">
+              <Paper sx={{ p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+                <FormControl>
+                    <FormLabel component="legend">亮度控制</FormLabel>
+                    <FormGroup aria-label="position" row sx={{mt: 2}}>
+                        <FormControlLabel
+                        value="LED1"
+                        control={<Switch color="primary" checked={control['LED1']} disabled={isAuto} />}
+                        label="藍光"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                        <FormControlLabel
+                        value="LED2"
+                        control={<Switch color="primary" checked={control['LED2']} disabled={isAuto} />}
+                        label="白光"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                    </FormGroup>
+                </FormControl>
+              </Paper>
+            </Grid>
+            <Grid item xs={1} sm={2} md="auto">
+              <Paper sx={{ p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+                <FormControl>
+                    <FormLabel component="legend">窗簾</FormLabel>
+                    <FormGroup aria-label="position" row sx={{mt: 2}}>
+                        <FormControlLabel
+                        value="window"
+                        control={<Switch color="primary" checked={control['window']} disabled={isAuto} />}
+                        label="WINDOW"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                    </FormGroup>
+                </FormControl>
+              </Paper>
+            </Grid>
+            <Grid item xs={1} sm={5} md="auto" sx={{flexGrow: 1}}>
+              <Paper sx={{ p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+                <FormControl>
+                    <FormLabel component="legend">風扇控制</FormLabel>
+                    <FormGroup aria-label="position" row sx={{mt: 2}}>
+                        <FormControlLabel
+                        value="fan1"
+                        control={<Switch color="primary" checked={control['fan1']} disabled={isAuto} />}
+                        label="FAN1"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                        <FormControlLabel
+                        value="fan2"
+                        control={<Switch color="primary" checked={control['fan2']} disabled={isAuto}/>}
+                        label="FAN2"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                        <FormControlLabel
+                        value="fan3"
+                        control={<Switch color="primary" checked={control['fan3']} disabled={isAuto} />}
+                        label="FAN3"
+                        labelPlacement="top"
+                        onChange={(e) => updateData(e, index)}
+                        />
+                    </FormGroup>
+                </FormControl>
+              </Paper>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
     );

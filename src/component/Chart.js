@@ -11,7 +11,6 @@ import {
 import { styled } from '@mui/material/styles';
 import { Animation } from '@devexpress/dx-react-chart';
 
-import { confidence as data } from './data-vizualization.js';
 
 const PREFIX = 'Demo';
 
@@ -54,8 +53,10 @@ const StyledChart = styled(Chart)(() => ({
 export function ChartCard(props) {
     const { title } = props;
     const { data: chartData } = props;
+    const { field } = props;
+    const { fieldName } = props;
     return (
-        <Paper sx={{ flexGrow: 1, minWidth: '300px', mx: 1}}>
+        <Paper sx={{ flexGrow: 1, minWidth: '300px'}}>
             <StyledChart
                 data={chartData}
                 className={classes.chart}
@@ -67,19 +68,9 @@ export function ChartCard(props) {
                 /> */}
 
                 <LineSeries
-                name="TV news"
-                valueField="tvNews"
-                argumentField="year"
-                />
-                <LineSeries
-                name="Church"
-                valueField="church"
-                argumentField="year"
-                />
-                <LineSeries
-                name="Military"
-                valueField="military"
-                argumentField="year"
+                name={fieldName}
+                valueField={field}
+                argumentField="time"
                 />
                 <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
                 <Title
