@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { confidence as data } from './component/data-vizualization.js';
 import { useMergeState } from 'react-hooks-lib'
 import Service from './component/service.js';
-
+import ApexChart from './component/ApexChart.js';
 function App() {
   const [controls, setControls] = useState(null);
 
@@ -60,7 +60,7 @@ function App() {
         </Box>
         <Box sx={{ display: 'flex', py: '10px', justifyContent: 'space-around', mx: -1 }} >
           <ChartCard data={data} title={"空氣溫度資訊圖表"} />
-          <ChartCard data={data} title={"空氣濕度資訊圖表"} />
+          {/* <ApexChart /> */}
         </Box>
       </Box>
     </>
