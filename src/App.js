@@ -59,7 +59,7 @@ function App() {
           }
         </Box>
         <Box sx={{ display: 'flex', py: '10px', justifyContent: 'space-around', mx: -1 }} >
-          <ChartCard data={data} title={"空氣溫度資訊圖表"} />
+          <ChartCard data={data} title={"資訊圖表"} />
           {/* <ApexChart /> */}
         </Box>
       </Box>

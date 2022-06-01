@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,29 +13,40 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 
 
 export function InfoCard(props) {
   const { data } = props;
-  const sensor = data[1]['value'];
-  const temp = sensor['tvalue'];
-  const humidity = sensor['hvalue'];
+  const [ , sensor, light ] = data; 
+  const sensorValue = sensor['value'];
+  const lightValue = light['value'];
+  const { tvalue: temp, hvalue: humidity } = sensorValue;
+  const { value: lightUp } = lightValue;
   return (
     <Card sx={{ minWidth: '400px' }} {...props}>
       <CardContent>
-        <Typography variant="h5" component="div">
-          即時資訊
-        </Typography>
-        <Typography sx={{ fontSize: 12 }} color="text.secondary" component={'legend'}>
-          RealTime Infomation
-        </Typography>
+        <Stack direction="row" spacing={2} sx={{ minHeight: '60px'}}>
+          <Box>
+            <Typography variant="h5" component="div">
+              即時資訊
+            </Typography>
+            <Typography sx={{ fontSize: 12 }} color="text.secondary" component={'legend'}>
+              RealTime Infomation
+            </Typography>
+          </Box>
+        </Stack>
         <hr/>
-        <Paper sx={{p: 2, m: 1, mt: 2, flexGrow: 1}} variant="outlined" >
+        <Paper sx={{ minHeight: '110px', p: 2, m: 1, mt: 2, flexGrow: 1}} variant="outlined" >
           <Typography variant="h6" component="div">
-            溫度：{temp} 度
+            溫度：{temp} °C
           </Typography>
           <Typography variant="h6" component="div">
             濕度：{humidity} %
+          </Typography>
+          <Typography variant="h6" component="div">
+            亮度：{lightUp.toFixed(2)} Lux
           </Typography>
         </Paper>
       </CardContent>
@@ -46,32 +58,54 @@ export function ConsoleCard(props) {
     const { updateData } = props;
     const { data } = props;
     const control = data[0]['value'];
-    const index = 0;
+    const index = 0; //網頁只控制 control 資料表, 0代表control資料表
+    const [isAuto, setIsAuto] = useState(control['IsAuto']);
+    function AutoControl(e) { 
+      updateData(e, index)
+      setIsAuto(e.target.checked);
+    }
     return (
       <Card sx={{ minWidth: '400px', ml: '16px', flexGrow: 1 }} {...props}>
         <CardContent>
-          <Typography variant="h5" component="div">
-            控制面板
-          </Typography>
-          <Typography sx={{ fontSize: 12 }} color="text.secondary" component={'legend'}>
-          Console Panel
-          </Typography>
+          <Stack direction="row" spacing={2} sx={{ minHeight: '60px'}}>
+            <Box>
+                <Typography variant="h5" component="div">
+                  控制面板
+                </Typography>
+                <Typography sx={{ fontSize: 12 }} color="text.secondary" component={'legend'}>
+                Console Panel
+                </Typography>
+            </Box>
+            <Box>
+                <FormControl>
+                    <FormGroup aria-label="position" row>
+                        <FormControlLabel
+                        value="IsAuto"
+                        control={<Switch color="primary" checked={control['IsAuto']} />}
+                        label="自動控制"
+                        labelPlacement="top"
+                        onChange={(e) => AutoControl(e)}
+                        />
+                    </FormGroup>
+                </FormControl>
+            </Box>
+          </Stack>
           <hr/>
           <Box  sx={{display: 'flex', justifyContent: 'space-around'}}>
-            <Paper sx={{p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
               <FormControl>
                   <FormLabel component="legend">亮度控制</FormLabel>
                   <FormGroup aria-label="position" row sx={{mt: 2}}>
                       <FormControlLabel
                       value="LED1"
-                      control={<Switch color="primary" checked={control['LED1']}/>}
+                      control={<Switch color="primary" checked={control['LED1']} disabled={isAuto} />}
                       label="LED1"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
                       />
                       <FormControlLabel
                       value="LED2"
-                      control={<Switch color="primary" checked={control['LED2']} />}
+                      control={<Switch color="primary" checked={control['LED2']} disabled={isAuto} />}
                       label="LED2"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
@@ -79,27 +113,27 @@ export function ConsoleCard(props) {
                   </FormGroup>
               </FormControl>
             </Paper>
-            <Paper sx={{p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
               <FormControl>
                   <FormLabel component="legend">風扇控制</FormLabel>
                   <FormGroup aria-label="position" row sx={{mt: 2}}>
                       <FormControlLabel
                       value="fan1"
-                      control={<Switch color="primary" checked={control['fan1']} />}
+                      control={<Switch color="primary" checked={control['fan1']} disabled={isAuto} />}
                       label="FAN1"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
                       />
                       <FormControlLabel
                       value="fan2"
-                      control={<Switch color="primary" checked={control['fan2']}/>}
+                      control={<Switch color="primary" checked={control['fan2']} disabled={isAuto}/>}
                       label="FAN2"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
                       />
                       <FormControlLabel
                       value="fan3"
-                      control={<Switch color="primary" checked={control['fan3']}/>}
+                      control={<Switch color="primary" checked={control['fan3']} disabled={isAuto} />}
                       label="FAN3"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
@@ -107,13 +141,13 @@ export function ConsoleCard(props) {
                   </FormGroup>
               </FormControl>
             </Paper>
-            <Paper sx={{p: 2, m: 1, flexGrow: 1}} variant="outlined" >
+            <Paper sx={{ minHeight: '110px', p: 2, m: 1, flexGrow: 1}} variant="outlined" >
               <FormControl>
                   <FormLabel component="legend">窗簾</FormLabel>
                   <FormGroup aria-label="position" row sx={{mt: 2}}>
                       <FormControlLabel
                       value="window"
-                      control={<Switch color="primary" checked={control['window']}/>}
+                      control={<Switch color="primary" checked={control['window']} disabled={isAuto} />}
                       label="WINDOW"
                       labelPlacement="top"
                       onChange={(e) => updateData(e, index)}
