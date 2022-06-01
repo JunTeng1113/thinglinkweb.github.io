@@ -4,13 +4,26 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { alpha } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+
 import { InfoCard, ConsoleCard } from './component/Card.js';
 import { ChartCard } from './component/Chart.js';
 import { useState, useEffect } from 'react';
-import { confidence as data } from './component/data-vizualization.js';
 import { useMergeState } from 'react-hooks-lib'
 import Service from './component/service.js';
 import ApexChart from './component/ApexChart.js';
+import { flower as chartData } from './component/data-vizualization.js';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 function App() {
   const [controls, setControls] = useState(null);
 
@@ -49,20 +62,20 @@ function App() {
   }, [])
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'background.paper', py: '10px', px: '20px' }} >
-        <Box sx={{ display: 'flex', py: '10px' }}>
-          {controls && 
-            <>
-              <InfoCard data={controls} />
-              <ConsoleCard data={controls} updateData={updateData}/>
-            </>
-          }
-        </Box>
-        <Box sx={{ display: 'flex', py: '10px', justifyContent: 'space-around', mx: -1 }} >
-          <ChartCard data={data} title={"資訊圖表"} />
-          {/* <ApexChart /> */}
-        </Box>
-      </Box>
+      <Grid container spacing={1} sx={{p: 2}} columns={{ xs: 4, sm: 4, md: 10}}>
+        <Grid item xs={4} sm={4} md={3}>
+          {controls && <InfoCard data={controls} />}
+        </Grid>
+        <Grid item xs={4} sm={4} md={7}>
+          {controls && <ConsoleCard data={controls} updateData={updateData}/>}
+        </Grid>
+        <Grid item xs={4} sm={2} md={5}>
+          <ChartCard data={chartData} field={'temp'} fieldName={"溫度"} title={"溫度資訊圖表"} />
+        </Grid>
+        <Grid item xs={4} sm={2} md={5}>
+          <ChartCard data={chartData} field={'humidity'} fieldName={"濕度"} title={"濕度資訊圖表"} />
+        </Grid>
+      </Grid>
     </>
   );
 }
